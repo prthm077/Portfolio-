@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<!-- Put this inside <head> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+  <title>Pratham | Portfolio</title>
+
+</head>
+<body>
+  <!-- Floating Particles Background -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Theme Toggle Button -->
+  <div class="theme-toggle" id="themeToggle" title="Toggle Theme">
+    🎨
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <h1>Pratham</h1>
+    <nav>
+      <div class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Hello, I'm Pratham 👋</h1>
+    <div class="typing-container">
+      <p id="typing"></p>
+    </div>
+    
+    <div class="btn-container">
+      <a href="#projects" class="btn">🚀 See My Projects</a>
+      <a href="#skills" class="btn">⚡ View Skills</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      Hi, I am Pratham, a B.C.A. student and a Vibe Coder, I made this entire portfolio website through vibe coding. I am passionate about modern, clean and user-friendly projects that brings ideas to life.
+
+      I started my journey with coding out of curiosity, and over time it became my passion. From learning the basics of C programming to experimenting with HTML, CSS, and vibe coding, I've been steadily building my skills to design digital experiences that look good and work smoothly.
+    </p>
+  </section>
+
+  <!-- NEW SKILLS SECTION -->
+<section id="skills" class="skills-section">
+  <h2>💻 Skills & Technologies</h2>
+  <p>Here are the technologies and skills I've been working with:</p>
+  
+  <div class="skills-grid">
+    <div class="skills-column">
+      <div class="skill-item">
+        <div class="skill-name">
+          <span>HTML5</span>
+          <span>90%</span>
+        </div>
+        <div class="skill-bar">
+          <div class="skill-progress" data-width="90"></div>
+        </div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-name">
+          <span>CSS3</span>
+          <span>70%</span>
+        </div>
+        <div class="skill-bar">
+          <div class="skill-progress" data-width="70"></div>
+        </div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-name">
+          <span>Vibe Coding</span>
+          <span>95%</span>
+        </div>
+        <div class="skill-bar">
+          <div class="skill-progress" data-width="95"></div>
+        </div>
+      </div>
+
+      <div class="skill-item">
+        <div class="skill-name">
+          <span>Python</span>
+          <span>50%</span>
+        </div>
+        <div class="skill-bar">
+          <div class="skill-progress" data-width="50"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+<!-- PROJECTS -->
+<section id="projects">
+  <h2>🚀 Projects</h2>
+  <div class="projects">
+    <p>
+      These projects are a reflection of my skills and my journey into 
+      <strong>vibe coding</strong> — where ideas turn into reality by combining 
+      creativity, flow, and AI-powered coding. Each project was built with a 
+      mix of design sense, problem-solving, and the freedom to experiment.
+    </p>
+
+    <div class="project-card">
+      <a href="/enhanced-portfolio.html"><h3>Portfolio Website</h3></a>
+      <p>
+        A modern, responsive personal portfolio built with HTML, CSS, and JavaScript. 
+        It features smooth animations, glassmorphism design, interactive skills progress bars, 
+        a feedback popup system, and theme toggling. 
+        (Yes, this is the website you are currently exploring!)
+      </p>
+    </div>
+
+    <div class="project-card">
+      <a href="/coding_story_game.html"><h3>Coding Quest: Game</h3></a>
+      <p>
+        An interactive story game that teaches programming through fantasy adventure. 
+        Players learn coding concepts like variables, conditionals, and loops by making 
+        decisions that drive a magical narrative forward. 
+        *Learn to code through adventure!* ⚡🎮
+      </p>
+    </div>
+  </div>
+  
+  <div class="project-card">
+  <a href="https://docs.google.com/presentation/d/1ZJqsHMKvSfTgUnmNTbfoCl5MomOKblO-5EJ8WKkCgVg/edit?usp=drivesdk" target="_blank">
+    <h3>The Future of Artificial Intelligence: Opportunities & Risks</h3>
+  </a>
+  <p>
+    A research-based presentation exploring the potential of Artificial Intelligence,
+    covering its opportunities in innovation, automation, and problem-solving,
+    along with the ethical challenges and risks it poses.
+    This project demonstrates my analytical, research, and presentation skills.
+  </p>
+</div>
+</section>
+  <center>  <a href="/free-ai-tools-portfolio-green.html" class="btn">Explore Free AI Tools</a></center>
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: patilpratham9601177687@gmail.com</p>
+    <p>Phone:+91-8260702855</p>
+  </section>
+  
+<!-- FEEDBACK BUTTON -->
+<button class="feedback-btn" id="openFeedback">💌</button>
+
+<!-- Feedback Popup -->
+<div class="feedback-popup" id="feedbackPopup">
+  <div class="feedback-content">
+    <span class="close-btn" id="closeFeedback">&times;</span>
+    <h2>💡 Your Feedback</h2>
+    <form id="feedbackForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <textarea id="message" rows="4" placeholder="Your Feedback..." required></textarea>
+      <button type="submit" class="btn">Submit</button>
+    </form>
+    <p id="feedbackThanks" style="display:none; margin-top:15px; color:#00ff99; font-weight:bold;">
+      ✅ Thanks for your feedback!
+    </p>
+  </div>
+</div>
+  <!-- FOOTER -->
+
+    <footer>
+  <p>© 2025 Pratham | All Rights Reserved</p>
+  
+</footer>
+
+
+  <script src="/script.js" defer></script>
+</div>
+</body>
+</html>
