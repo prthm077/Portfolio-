@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Free AI Tools — Pratham</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  /* ==== Base (matches your portfolio structure) ==== */
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins",sans-serif; }
+  :root {
+    --bg1:#0f0f0f; --bg2:#111018; --bg3:#1b1b2b;
+    --accent:#00ff99; --accent-2:#00cc77;
+    --text:#e6f7ee;
+    --panel-bg: rgba(255,255,255,0.03);
+    --panel-brd: rgba(255,255,255,0.06);
+  }
+  html, body { height:100%; }
+  body {
+    color: var(--text);
+    min-height: 100vh;
+    background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
+    background-size: 600% 600%;
+    animation: vibeGradient 12s ease infinite;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display:flex;
+    flex-direction:column;
+  }
+  @keyframes vibeGradient {
+    0% { background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+    100%{ background-position:0% 50%; }
+  }
+  body::before {
+    content:"";
+    position:fixed; inset:0; pointer-events:none;
+    background-image: radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:20px 20px; opacity:.06; mix-blend-mode:overlay; z-index:0;
+  }
+  .page-root { position:relative; z-index:1; max-width:1200px; margin:28px auto; padding:0 18px; width:100%; }
+
+  /* ==== Header (back only) ==== */
+  header {
+    position: sticky; top:0; z-index:10;
+    background: rgba(12,12,12,0.25);
+    border-bottom: 1px solid var(--panel-brd);
+    padding: 14px 18px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+    display:flex; align-items:center; gap:12px;
+  }
+  .back-btn {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 14px; border-radius:12px; font-weight:600;
+    text-decoration:none; color:#0f0f0f;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    border: none;
+  }
+  .back-btn:hover { filter:brightness(0.95); transform: translateY(-1px); transition: all .2s ease; }
+  .title { margin-left:10px; font-weight:1000; color: var(--accent); 
+    font-size: 25px;
+  }
+
+  /* ==== Tools Hero / Controls ==== */
+  .tools-hero {
+    background: var(--panel-bg);
+    border:1px solid var(--panel-brd);
+    backdrop-filter: blur(6px) saturate(120%);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 20px; border-radius: 12px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+    margin: 18px 0;
+  }
+  .tools-hero h2 { font-size:1.35rem; color: var(--accent); margin-bottom:6px; }
+  .tools-hero p { color: rgba(233,254,240,0.9); }
+  .controls {
+    display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:12px;
+  }
+  .controls input[type="search"], .controls select {
+    padding: 11px 14px; border-radius: 10px; border: none; outline:none;
+    background: rgba(255,255,255,0.06); color: inherit;
+    backdrop-filter: blur(8px);
+  }
+  .controls .small-btn {
+    padding: 10px 14px; border-radius: 10px; border:none; cursor:pointer;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color:#0f0f0f; font-weight:700; box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  }
+
+  /* ==== Table ==== */
+  .table-wrap {
+    background: var(--panel-bg);
+    border:1px solid var(--panel-brd);
+    backdrop-filter: blur(6px) saturate(120%);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius:12px; padding:10px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+    overflow:hidden;
+  }
+  table { width:100%; border-collapse:collapse; min-width:720px; }
+  thead th {
+    text-align:left; padding:12px 14px;
+    background: rgba(0,255,153,0.12);
+    color: var(--accent);
+    font-weight:700;
+  }
+  tbody td { padding:12px 14px; border-top:1px solid rgba(255,255,255,0.08); vertical-align:top; }
+  tbody tr:nth-child(odd) { background: rgba(255,255,255,0.02); }
+  .btn {
+    display:inline-block; padding:8px 12px; border-radius:10px; text-decoration:none;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color:#0f0f0f; font-weight:700;
+  }
+  .btn:hover { filter:brightness(0.95); }
+
+  footer {
+    text-align:center; padding:20px; margin: 24px 0 10px;
+    background: rgba(26,26,26,0.6);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-radius:12px;
+  }
+  footer p { color:#e6f7ee; }
+
+  /* ==== Mobile: table -> cards ==== */
+  @media (max-width: 720px) {
+    table, thead, tbody, th, td, tr { display:block; width:100%; }
+    thead { display:none; }
+    tbody tr { margin-bottom:12px; border-radius:12px; padding:12px; background: rgba(255,255,255,0.03); }
+    tbody td { display:flex; justify-content:space-between; gap:8px; padding:8px 0; }
+    tbody td::before {
+      content: attr(data-label);
+      font-weight:700; color: var(--accent); min-width:110px;
+    }
+    table { min-width: unset; }
+  }
+  
+#backToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  background: #1e1e1e; /* dark background to match UI */
+  color: #00ff99; /* neon green arrow */
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease;
+  z-index: 999;
+}
+
+#backToTop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+#backToTop:hover {
+  transform: scale(1.1);
+  background: #2a2a2a; /* slightly lighter hover */
+}
+</style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="enhanced-portfolio.html" aria-label="Back to Portfolio">← Back</a>
+    <div class="title">Free AI Tools</div>
+  </header>
+
+  <div class="page-root">
+    <section class="tools-hero">
+      <h2>Free AI Tools</h2>
+      <p>Here Is the 47 Best Ai tools That Can Help You In Study.</p>
+      <div class="controls">
+        <input id="search" type="search" placeholder="Search tools by name or description...">
+        <select id="categoryFilter"><option value="all">All Categories</option></select>
+        <button id="clearBtn" class="small-btn">Clear</button>
+      </div>
+    </section>
+
+    <section class="table-wrap">
+      <table id="toolsTable" aria-label="Free AI tools">
+        <thead>
+          <tr><th>Tool Name</th><th>Category</th><th>Description</th><th>Link</th></tr>
+        </thead>
+        <tbody>
+          <tr><td data-label="Tool Name">Jenni AI</td><td data-label="Category">Academic Writing</td><td data-label="Description">AI writing with citations and research</td><td data-label="Link"><a class="btn" href="https://jenni.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Paperpal</td><td data-label="Category">Academic Writing</td><td data-label="Description">AI academic writing and proofreading</td><td data-label="Link"><a class="btn" href="https://paperpal.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Yomu AI</td><td data-label="Category">Academic Writing</td><td data-label="Description">AI-powered academic writing assistant</td><td data-label="Link"><a class="btn" href="https://www.yomu.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">AskCodi</td><td data-label="Category">Coding Assistant</td><td data-label="Description">AI coding help and generation</td><td data-label="Link"><a class="btn" href="https://www.askcodi.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">ChatPDF</td><td data-label="Category">Document Analysis</td><td data-label="Description">Chat with PDF documents</td><td data-label="Link"><a class="btn" href="https://www.chatpdf.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">PDF AI</td><td data-label="Category">Document Analysis</td><td data-label="Description">Chat with PDF files</td><td data-label="Link"><a class="btn" href="https://pdf.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">ChatGPT</td><td data-label="Category">General AI Assistant</td><td data-label="Description">AI writing, homework help, explanations, and conversations</td><td data-label="Link"><a class="btn" href="https://chat.openai.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Google Gemini</td><td data-label="Category">General AI Assistant</td><td data-label="Description">Research, writing assistance, and general queries</td><td data-label="Link"><a class="btn" href="https://gemini.google.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Microsoft Copilot</td><td data-label="Category">General AI Assistant</td><td data-label="Description">AI companion for various tasks and learning</td><td data-label="Link"><a class="btn" href="https://copilot.microsoft.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">EduBrain AI</td><td data-label="Category">Homework Help</td><td data-label="Description">Picture solver with step-by-step explanations</td><td data-label="Link"><a class="btn" href="https://edubrain.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Homework.ai</td><td data-label="Category">Homework Help</td><td data-label="Description">AI tutor with voice and text recognition</td><td data-label="Link"><a class="btn" href="https://www.homework-ai.app" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">HomeworkAI</td><td data-label="Category">Homework Help</td><td data-label="Description">AI homework helper and solver</td><td data-label="Link"><a class="btn" href="https://homeworkai.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">StudyX</td><td data-label="Category">Homework Help</td><td data-label="Description">Step-by-step solutions for all subjects</td><td data-label="Link"><a class="btn" href="https://studyx.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">TutorBin</td><td data-label="Category">Homework Help</td><td data-label="Description">AI homework solver with image scanning</td><td data-label="Link"><a class="btn" href="https://tutorbin.com/ai-homework-helper" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">DALL-E</td><td data-label="Category">Image Generation</td><td data-label="Description">AI image generation from text</td><td data-label="Link"><a class="btn" href="https://openai.com/dall-e-2" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Duolingo</td><td data-label="Category">Language Learning</td><td data-label="Description">AI-powered personalized language courses</td><td data-label="Link"><a class="btn" href="https://www.duolingo.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Gliglish</td><td data-label="Category">Language Learning</td><td data-label="Description">Practice speaking with AI tutors</td><td data-label="Link"><a class="btn" href="https://gliglish.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Langua</td><td data-label="Category">Language Learning</td><td data-label="Description">AI conversation practice for language learning</td><td data-label="Link"><a class="btn" href="https://langua.io" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">TalkPal</td><td data-label="Category">Language Learning</td><td data-label="Description">AI language tutor with realistic conversations</td><td data-label="Link"><a class="btn" href="https://talkpal.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Talkio AI</td><td data-label="Category">Language Learning</td><td data-label="Description">Voice conversations with AI tutors</td><td data-label="Link"><a class="btn" href="https://www.talkio.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Doctrina AI</td><td data-label="Category">Learning Platform</td><td data-label="Description">AI learning with notes and quizzes</td><td data-label="Link"><a class="btn" href="https://doctrina.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Khan Academy (Khanmigo)</td><td data-label="Category">Learning Platform</td><td data-label="Description">AI-powered tutoring and learning assistance</td><td data-label="Link"><a class="btn" href="https://www.khanacademy.org" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Snorkl</td><td data-label="Category">Learning Platform</td><td data-label="Description">AI-powered personalized practice</td><td data-label="Link"><a class="btn" href="https://snorkl.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">StudyFetch</td><td data-label="Category">Learning Platform</td><td data-label="Description">AI tutor that transforms study materials</td><td data-label="Link"><a class="btn" href="https://www.studyfetch.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Wolfram Alpha</td><td data-label="Category">Math &amp; Science</td><td data-label="Description">Computational knowledge engine</td><td data-label="Link"><a class="btn" href="https://www.wolframalpha.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">GauthMath</td><td data-label="Category">Math Solver</td><td data-label="Description">Photo-based math problem solver</td><td data-label="Link"><a class="btn" href="https://www.gauthmath.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Math.now</td><td data-label="Category">Math Solver</td><td data-label="Description">Photomath technology with MathGPT</td><td data-label="Link"><a class="btn" href="https://math.now" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Photomath</td><td data-label="Category">Math Solver</td><td data-label="Description">Camera-based math problem solver</td><td data-label="Link"><a class="btn" href="https://photomath.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Mubert</td><td data-label="Category">Music Generation</td><td data-label="Description">AI music generation</td><td data-label="Link"><a class="btn" href="https://mubert.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Coursera AI Courses</td><td data-label="Category">Online Learning</td><td data-label="Description">AI and machine learning courses</td><td data-label="Link"><a class="btn" href="https://www.coursera.org/courses?query=ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Gamma AI</td><td data-label="Category">Presentation</td><td data-label="Description">AI presentation and document creation</td><td data-label="Link"><a class="btn" href="https://gamma.app" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Presentations.AI</td><td data-label="Category">Presentation</td><td data-label="Description">ChatGPT for presentations</td><td data-label="Link"><a class="btn" href="https://www.presentations.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Sendsteps AI</td><td data-label="Category">Presentation</td><td data-label="Description">Interactive AI presentation maker</td><td data-label="Link"><a class="btn" href="https://www.sendsteps.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Slidesgo AI</td><td data-label="Category">Presentation</td><td data-label="Description">AI presentation maker from text</td><td data-label="Link"><a class="btn" href="https://slidesgo.com/ai/presentation-maker" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Solvely</td><td data-label="Category">Problem Solver</td><td data-label="Description">Real-time homework solutions</td><td data-label="Link"><a class="btn" href="https://solvely.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Question AI</td><td data-label="Category">Q&amp;A Assistant</td><td data-label="Description">AI for complex questions across subjects</td><td data-label="Link"><a class="btn" href="https://www.question.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Microsoft Reading Progress</td><td data-label="Category">Reading Assessment</td><td data-label="Description">AI-powered reading fluency assessment</td><td data-label="Link"><a class="btn" href="https://learn.microsoft.com/en-us/training/educator-center/product-guides/reading-progress/" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Microsoft Reading Coach</td><td data-label="Category">Reading Practice</td><td data-label="Description">AI-powered personalized reading practice</td><td data-label="Link"><a class="btn" href="https://coach.microsoft.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Mendeley</td><td data-label="Category">Reference Management</td><td data-label="Description">AI-powered reference organization</td><td data-label="Link"><a class="btn" href="https://www.mendeley.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Socratic by Google</td><td data-label="Category">Study Help</td><td data-label="Description">AI-powered homework help with camera</td><td data-label="Link"><a class="btn" href="https://socratic.google.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Quizlet</td><td data-label="Category">Study Tools</td><td data-label="Description">AI-powered flashcards and study sets</td><td data-label="Link"><a class="btn" href="https://quizlet.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Natural Readers</td><td data-label="Category">Text-to-Speech</td><td data-label="Description">AI text-to-speech for reading</td><td data-label="Link"><a class="btn" href="https://www.naturalreaders.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Otter.ai</td><td data-label="Category">Transcription</td><td data-label="Description">Meeting transcription and summary</td><td data-label="Link"><a class="btn" href="https://otter.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Tutor.ai</td><td data-label="Category">Tutoring</td><td data-label="Description">AI-based tutoring platform</td><td data-label="Link"><a class="btn" href="https://tutor.ai" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">ElevenLabs</td><td data-label="Category">Voice Generation</td><td data-label="Description">AI voice generation and cloning</td><td data-label="Link"><a class="btn" href="https://elevenlabs.io" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">Grammarly</td><td data-label="Category">Writing Assistant</td><td data-label="Description">Grammar checking and writing enhancement</td><td data-label="Link"><a class="btn" href="https://www.grammarly.com" target="_blank" rel="noopener">Visit</a></td></tr>
+          <tr><td data-label="Tool Name">QuillBot</td><td data-label="Category">Writing Assistant</td><td data-label="Description">Paraphrasing and writing tools</td><td data-label="Link"><a class="btn" href="https://quillbot.com" target="_blank" rel="noopener">Visit</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+    <!-- Back to Top Button -->
+    <button id="backToTop">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+</button>
+    <footer>
+      <p>©2025-Made with ❤️ — Pratham</p>
+    </footer>
+  </div>
+
+<script>
+// Build category list
+const tableBody = document.querySelector('#toolsTable tbody');
+const rows = [...tableBody.querySelectorAll('tr')];
+const catSel = document.getElementById('categoryFilter');
+const searchInput = document.getElementById('search');
+const clearBtn = document.getElementById('clearBtn');
+
+const cats = [...new Set(rows.map(r => r.children[1].innerText.trim()))].sort();
+cats.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; catSel.appendChild(o); });
+
+function filterRows() {
+  const q = searchInput.value.toLowerCase();
+  const cat = catSel.value.toLowerCase();
+  rows.forEach(r => {
+    const name = r.children[0].innerText.toLowerCase();
+    const c = r.children[1].innerText.toLowerCase();
+    const desc = r.children[2].innerText.toLowerCase();
+    const matchQ = name.includes(q) || desc.includes(q);
+    const matchC = (cat === 'all') || (c === cat);
+    r.style.display = (matchQ && matchC) ? '' : 'none';
+  });
+}
+searchInput.addEventListener('input', filterRows);
+catSel.addEventListener('change', filterRows);
+clearBtn.addEventListener('click', () => { searchInput.value=''; catSel.value='all'; filterRows(); });
+const backToTop = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    backToTop.classList.add("show");
+  } else {
+    backToTop.classList.remove("show");
+  }
+});
+
+backToTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+</body>
+</html>
