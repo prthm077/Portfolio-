@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quest: The Digital Realm</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .game-area {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .story-text {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .code-concept {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid #4ecdc4;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .choices {
+            display: grid;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .choice-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .choice-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .choice-btn:hover:before {
+            left: 100%;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .concept-learned {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            animation: glow 2s ease-in-out;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+        }
+
+        .restart-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .game-title {
+                font-size: 2em;
+            }
+            
+            .story-text {
+                font-size: 1.1em;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <h1 class="game-title">Code Quest: The Digital Realm</h1>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+            <div class="stats">
+                <div class="stat">🧠 Knowledge: <span id="knowledge">0</span></div>
+                <div class="stat">⚡ Energy: <span id="energy">100</span></div>
+                <div class="stat">🏆 Level: <span id="level">1</span></div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div id="storyContent">
+                <div class="story-text">
+                    Welcome, brave adventurer, to the Digital Realm! You are a young programmer who has been mysteriously transported into a world where code controls reality itself. 
+                    <br><br>
+                    You find yourself standing before a massive crystalline tower that pulses with digital energy. A wise old wizard approaches you, his robes shimmering with lines of code.
+                    <br><br>
+                    "Greetings, young one! I am Algoris, the Code Sage. To escape this realm and return home, you must master the ancient arts of programming. Are you ready to begin your journey?"
+                </div>
+            </div>
+            
+            <div class="choices" id="choices">
+                <button class="choice-btn" onclick="makeChoice(1)">
+                    "Yes! I'm ready to learn programming!"
+                </button>
+                <button class="choice-btn" onclick="makeChoice(2)">
+                    "What exactly do I need to learn?"
+                </button>
+                <button class="choice-btn" onclick="makeChoice(3)">
+                    "Can you explain what programming is?"
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let gameState = {
+            knowledge: 0,
+            energy: 100,
+            level: 1,
+            currentScene: 0,
+            conceptsLearned: []
+        };
+
+        // Story scenes
+        const scenes = [
+            // Scene 0: Opening
+            {
+                story: `Welcome, brave adventurer, to the Digital Realm! You are a young programmer who has been mysteriously transported into a world where code controls reality itself. 
+                
+                You find yourself standing before a massive crystalline tower that pulses with digital energy. A wise old wizard approaches you, his robes shimmering with lines of code.
+                
+                "Greetings, young one! I am Algoris, the Code Sage. To escape this realm and return home, you must master the ancient arts of programming. Are you ready to begin your journey?"`,
+                choices: [
+                    { text: '"Yes! I\'m ready to learn programming!"', next: 1 },
+                    { text: '"What exactly do I need to learn?"', next: 2 },
+                    { text: '"Can you explain what programming is?"', next: 3 }
+                ]
+            },
+            // Scene 1: Variables Introduction
+            {
+                story: `"Excellent!" Algoris exclaims. "Let's start with the foundation of all magic in this realm: VARIABLES!"
+                
+                He waves his staff, and floating symbols appear in the air. "Variables are like magical containers that store information. Watch!"
+                
+                The wizard demonstrates: <strong>health = 100</strong>`,
+                concept: `VARIABLES: Containers that store data
+                
+// Creating variables
+let playerName = "Hero";
+let health = 100;
+let hasKey = false;`,
+                choices: [
+                    { text: 'Create a variable to store my character name', next: 4, knowledge: 10 },
+                    { text: 'Ask about different types of variables', next: 5 },
+                    { text: 'Skip to something more advanced', next: 6, energy: -10 }
+                ]
+            },
+            // Scene 2: Explanation Path
+            {
+                story: `"Ah, a wise question!" Algoris nods approvingly. "In this realm, you must master four ancient arts:
+                
+                🔮 Variables - Containers for magical data
+                🌊 Conditionals - The power to make decisions
+                🔄 Loops - Repeating magic efficiently  
+                🏗️ Functions - Reusable spells
+                
+                Each art will grant you power to manipulate this digital world!"`,
+                choices: [
+                    { text: 'Start with Variables', next: 1 },
+                    { text: 'Begin with Conditionals', next: 7 },
+                    { text: 'I want to learn about Loops first', next: 10 }
+                ]
+            },
+            // Scene 3: Programming Basics
+            {
+                story: `"Programming," Algoris explains with twinkling eyes, "is the art of giving instructions to magical constructs - what your world calls 'computers.' 
+                
+                Think of it like writing a recipe, but instead of making soup, you're creating digital worlds, solving problems, and bringing ideas to life!
+                
+                In this realm, your code becomes reality. Every variable you declare, every function you write - it shapes the world around you."`,
+                choices: [
+                    { text: 'That sounds amazing! Let\'s start learning!', next: 1 },
+                    { text: 'Show me what code looks like', next: 2 },
+                    { text: 'How do I know if I\'m doing it right?', next: 8 }
+                ]
+            },
+            // Scene 4: Variables Practice
+            {
+                story: `"Perfect!" Algoris beams as you successfully create your first variable. You feel a surge of magical energy!
+                
+                <strong>let heroName = "Your Name"</strong>
+                
+                Suddenly, your name appears glowing above your head! "You see? Variables give form to information. Now, let's try something more complex..."
+                
+                A locked door appears before you, and Algoris explains: "This door will only open if we have the right key. We need to use CONDITIONALS!"`,
+                concept: `CONDITIONALS: Making decisions in code
+
+if (hasKey === true) {
+    door.open();
+} else {
+    console.log("Door is locked!");
+}`,
+                choices: [
+                    { text: 'Use an if-statement to check for the key', next: 9, knowledge: 15 },
+                    { text: 'Try to force the door open without code', next: 11, energy: -20 },
+                    { text: 'Ask Algoris to explain conditionals more', next: 7 }
+                ]
+            },
+            // Scene 5: Variable Types
+            {
+                story: `"Excellent question!" Algoris creates several glowing orbs. "Variables come in different types, like different kinds of magical containers:
+                
+                🔢 Numbers: let age = 25
+                📝 Strings: let name = "Hero" 
+                ✅ Booleans: let isAlive = true
+                📦 Objects: let player = {health: 100}
+                🗂️ Arrays: let inventory = ["sword", "potion"]
+                
+                Each type has special powers and uses!"`,
+                choices: [
+                    { text: 'Practice creating different variable types', next: 4, knowledge: 8 },
+                    { text: 'Learn about conditionals next', next: 7 },
+                    { text: 'What are arrays used for?', next: 12 }
+                ]
+            },
+            // Scene 6: Overconfident Path
+            {
+                story: `You attempt to skip ahead, but the magical barriers block your path! Algoris chuckles softly.
+                
+                "Patience, young one. Programming is like building a tower - you need a strong foundation. Trying to build advanced spells without understanding the basics is like trying to cast a fireball without knowing how to light a candle."
+                
+                You feel drained from the failed attempt, but wiser.`,
+                choices: [
+                    { text: 'You\'re right. Let me learn variables properly.', next: 1, knowledge: 5 },
+                    { text: 'Can you show me why basics are important?', next: 13 }
+                ]
+            },
+            // Scene 7: Conditionals Deep Dive
+            {
+                story: `"Conditionals," Algoris explains as magical pathways appear before you, "are how we make decisions in code. They're like crossroads in your adventure!"
+                
+                Three paths stretch before you, each with different conditions:
+                - Left path: if (courage > 50)
+                - Middle path: if (wisdom >= 30) 
+                - Right path: if (hasKey === true)
+                
+                "Choose wisely! Your code will determine your fate!"`,
+                concept: `CONDITIONALS: Decision making in programming
+
+// Basic if statement
+if (condition) {
+    // Do something
+}
+
+// If-else
+if (condition) {
+    // Do this
+} else {
+    // Do that
+}
+
+// Multiple conditions
+if (condition1) {
+    // Option 1
+} else if (condition2) {
+    // Option 2
+} else {
+    // Default option
+}`,
+                choices: [
+                    { text: 'Take the courage path (if courage > 50)', next: 14, knowledge: 12 },
+                    { text: 'Choose the wisdom path (if wisdom >= 30)', next: 15, knowledge: 12 },
+                    { text: 'Try the key path (if hasKey === true)', next: 16, knowledge: 12 }
+                ]
+            },
+            // Scene 8: Testing and Debugging
+            {
+                story: `"Ah! A crucial question!" Algoris conjures a magical mirror that shows flickering code. "In programming, we test our spells constantly. This is called 'debugging' - hunting down the tiny gremlins that make our code misbehave!"
+                
+                The mirror shows: console.log("This helps us see what's happening!");
+                
+                "And remember - every programmer makes mistakes. Even I once accidentally turned all the trees in the Enchanted Forest into giant brackets! The key is learning from errors."`,
+                choices: [
+                    { text: 'Learn about console.log and debugging', next: 17, knowledge: 8 },
+                    { text: 'Start with basic programming concepts', next: 1 },
+                    { text: 'Tell me more about common mistakes', next: 18 }
+                ]
+            },
+            // Scene 9: Successful Conditional
+            {
+                story: `Brilliant! You write your first conditional statement:
+                
+                if (hasKey === true) {
+                    door.unlock();
+                    console.log("The door creaks open!");
+                }
+                
+                The ancient door glows and swings open with a satisfying creak! Beyond it, you see a chamber filled with swirling loops of light.
+                
+                "Magnificent!" Algoris applauds. "You're learning quickly. Now, let's explore the power of LOOPS!"`,
+                concept: `🎉 CONCEPT MASTERED: Conditionals
+                
+You learned how to make decisions in code using if-statements!`,
+                choices: [
+                    { text: 'Enter the chamber and learn about loops', next: 19, knowledge: 20 },
+                    { text: 'Practice more conditionals first', next: 20 },
+                    { text: 'Ask what loops are used for', next: 21 }
+                ]
+            },
+            // Scene 10: Loops Introduction  
+            {
+                story: `"Loops!" Algoris exclaims, creating a mesmerizing spiral of code in the air. "The art of repetition without repetition!"
+                
+                "Imagine you need to light 100 candles. You could write 100 separate commands... or use the power of loops!"
+                
+                The spiral shows: for (let i = 0; i < 100; i++) { lightCandle(); }
+                
+                "One spell, infinite possibilities!"`,
+                concept: `LOOPS: Repeating actions efficiently
+
+// For loop - when you know how many times
+for (let i = 0; i < 10; i++) {
+    console.log("Count: " + i);
+}
+
+// While loop - when you have a condition
+while (health > 0) {
+    keepFighting();
+}`,
+                choices: [
+                    { text: 'Practice with a for loop', next: 22, knowledge: 15 },
+                    { text: 'Try a while loop instead', next: 23, knowledge: 15 },
+                    { text: 'Why not just copy-paste code 100 times?', next: 24 }
+                ]
+            },
+            // More scenes continue...
+            // Scene 11: Brute Force Failure
+            {
+                story: `You charge at the door with your shoulder! *THUD!* 
+                
+                The magical barrier flares, sending you stumbling backward. Your energy is drained, and Algoris shakes his head with a knowing smile.
+                
+                "Raw force rarely works in the digital realm, young one. Programming is about elegance, logic, and understanding. The door responds only to proper code!"`,
+                choices: [
+                    { text: 'Fine, teach me about conditionals properly', next: 7, knowledge: 3 },
+                    { text: 'Is there any other way to open it?', next: 25 },
+                    { text: 'Let me rest and try variables again', next: 1, energy: 10 }
+                ]
+            },
+            // Final scene for now
+            {
+                story: `🎉 Congratulations! You've completed the first chapter of your coding journey!
+                
+                Algoris nods proudly as digital fireworks light up the sky. "You have shown great promise, young programmer. You've learned about variables, conditionals, and begun to understand the elegant power of code."
+                
+                "Your journey in the Digital Realm has only just begun. There are still many mysteries to uncover: functions, objects, arrays, and the deeper magics of programming!"
+                
+                The tower begins to glow more brightly, responding to your newfound knowledge.`,
+                choices: [
+                    { text: 'Continue the adventure! (Restart with more challenges)', next: 0 },
+                    { text: 'Review what I\'ve learned', next: 26 }
+                ]
+            }
+        ];
+
+        // Add more scenes to reach the indices referenced above
+        while (scenes.length < 27) {
+            scenes.push({
+                story: `"There's so much more to learn!" Algoris says with twinkling eyes. "But you've made excellent progress for now. The path of programming is long but rewarding!"
+                
+                🌟 This concludes the current demo of Code Quest! 
+                
+                In a full version, you'd continue learning about:
+                - Functions and reusable code
+                - Arrays and data manipulation  
+                - Object-oriented programming
+                - Advanced algorithms
+                - Real-world applications
+                
+                Ready to start over and explore different paths?`,
+                choices: [
+                    { text: 'Restart the adventure!', next: 0 },
+                    { text: 'Exit game', next: -1 }
+                ]
+            });
+        }
+
+        function updateStats() {
+            document.getElementById('knowledge').textContent = gameState.knowledge;
+            document.getElementById('energy').textContent = gameState.energy;
+            document.getElementById('level').textContent = gameState.level;
+            
+            // Update progress bar based on knowledge
+            const progress = Math.min((gameState.knowledge / 100) * 100, 100);
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            // Level up logic
+            if (gameState.knowledge >= 50 && gameState.level === 1) {
+                gameState.level = 2;
+                showConceptLearned("🎉 LEVEL UP! You're becoming a skilled programmer!");
+            }
+        }
+
+        function showConceptLearned(text) {
+            const conceptDiv = document.createElement('div');
+            conceptDiv.className = 'concept-learned';
+            conceptDiv.innerHTML = text;
+            document.getElementById('storyContent').appendChild(conceptDiv);
+        }
+
+        function makeChoice(choiceIndex) {
+            const currentScene = scenes[gameState.currentScene];
+            const choice = currentScene.choices[choiceIndex - 1];
+            
+            // Update stats based on choice
+            if (choice.knowledge) {
+                gameState.knowledge += choice.knowledge;
+            }
+            if (choice.energy) {
+                gameState.energy += choice.energy;
+            }
+            
+            // Ensure energy doesn't go below 0
+            gameState.energy = Math.max(0, gameState.energy);
+            
+            // Move to next scene
+            if (choice.next === -1) {
+                // Exit game
+                document.getElementById('storyContent').innerHTML = `
+                    <div class="story-text">
+                        Thank you for playing Code Quest! 🎮
+                        <br><br>
+                        You've taken your first steps into the wonderful world of programming. Remember: every expert was once a beginner!
+                        <br><br>
+                        Keep coding, keep learning, and keep building amazing things! 🚀
+                    </div>
+                    <button class="restart-btn" onclick="restartGame()">Play Again</button>
+                `;
+                document.getElementById('choices').style.display = 'none';
+                return;
+            }
+            
+            gameState.currentScene = choice.next;
+            displayCurrentScene();
+            updateStats();
+        }
+
+        function displayCurrentScene() {
+            const scene = scenes[gameState.currentScene];
+            
+            let content = `<div class="story-text">${scene.story}</div>`;
+            
+            if (scene.concept) {
+                content += `<div class="code-concept">${scene.concept}</div>`;
+            }
+            
+            document.getElementById('storyContent').innerHTML = content;
+            
+            // Display choices
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
+            
+            scene.choices.forEach((choice, index) => {
+                const button = document.createElement('button');
+                button.className = 'choice-btn';
+                button.textContent = choice.text;
+                button.onclick = () => makeChoice(index + 1);
+                choicesDiv.appendChild(button);
+            });
+        }
+
+        function restartGame() {
+            gameState = {
+                knowledge: 0,
+                energy: 100,
+                level: 1,
+                currentScene: 0,
+                conceptsLearned: []
+            };
+            
+            document.getElementById('choices').style.display = 'grid';
+            displayCurrentScene();
+            updateStats();
+        }
+
+        // Initialize game
+        displayCurrentScene();
+        updateStats();
+    </script>
+</body>
+</html>
